@@ -1,0 +1,33 @@
+Description:
+- Create a Terraform script to provision an ec2 instance with the necessary security
+group and VPC configurations.
+- Configure instance with Nginx web server and other necessary configurations
+- Deploy task1 node js application on the same nginx web server through
+Ansible.
+Deliverables: Terraform scripts, Ansible configuration, Web server configuration files
+
+Now, let us understand our terraform script. before going to that let us understand those components
+
+VPC: it is known as a virtual private cloud that has an isolated large network to launch AWS resources like ec2, s3, and other services as well
+Subnet: we have a large network in our VPC, So the subnet is a smaller network in our VPC which divides the VPC CIDR address range into smaller 
+segment network and allocate them to resources inside our VPC.
+Route Tables: route tables are nothing but rules that grant or allow access to network traffic.
+Internet Gateway: This provides an interface or a gateway to access the resource inside our VPC.
+
+So Terraform is an IaC tool, which means it provides infrastructure as a code. this helps to create infra in cloud environments.
+
+the reason why we are using the infrastructure(IaaC) tool here is, that if you want to create an infra for a single application then it is fine, but if you have to provide infra for multiple 
+applications at that time terraform will useful. we can reuse the code multiple times using modules and other features in Terraform.
+
+we have created the required infrastructure for installing nginx on top of our server.
+Now we need to deploy our node application on top of our nginx-instance using Ansible for that
+
+1) install ansible on the server
+2) start writing playbook
+3) install git and docker
+4) restart docker
+6) clone git repo
+7) build a docker image
+8) create a container
+9) in /etc/nginx/nginx.conf file update local host<public_ip_address:host_port> 
+10) restart Ngnix server and then we can access the server.

@@ -1,0 +1,42 @@
+- Create a Kubernetes deployment configuration file (in YAML) for a web application. The deployment should have 3 replicas, use the nginx:latestimage, 
+and expose port 80. The configuration should also include a liveness probe and a readiness probe, also it should have guaranteed QOS for deployments.
+
+nginx-deployment.yaml understanding:
+
+So in this task we have created a nginx-deployment pod with 3 replicas 
+Basically deployment is nothing but just like a pod, but it provides the replicas for you pod. these replicas helps you to balance your load whenever 
+there is huge traffic for your application.
+here we are using NGINX image with expose port 80 and we are using service manifest in our deployment file to expose our application real world.
+
+Quality of service: when we have container in the pod, so every container should get equal number of memory size and cpu limit 
+this QOS helps us to achive that feature for every container.
+resources--> limit and request
+so requests will have initial memory size and cpu limit where as limit will have same memory size and cpu limit, but the functionality is different
+the amount of space and memory which is defined in the limit will be maximum size and cpu allocated to the every container in the pod.
+request will provide intial memory and cpu limit of the containers inside the pod.
+
+Liveness Probe and Readiness Probe:
+
+in our Kubernetes cluster, if a pod in our cluster is going into dead lock state and it needs restart at that time we need liveness prob to know our pod.
+this tells kubelet and it will alert of cluster.
+
+it is responsible to receive the traffic or not, So if the pod is not ready to receive the traffic rediness probe will tell our cluster it is not ready 
+and remove from load balancer, if it is ready it will tell  our cluster it is ready to receive the traffic
+
+livenessProb:
+  httpGet:
+    path: /health -----> this is our status endpoint to check our health status
+    port: 80      -----> port on which it is running
+  initialDelaySeconds:15 -----> Suppose if deploy our application first time then it is goin to wait for 15 secs after it will regularly use periodSeconds.
+  periodSeconds: 10      -----> for every 10s it will check status of our pod.
+  failureThresold:3 after 3 times it mark it as unhealty then it will try to restart our pod
+
+ 
+
+readinessProb:
+  httpGet:
+    path: /ready   -----> status  endpoint of our application
+    port: 80       -----> port on which it is running
+  initialDelaySeconds:15  -----> it will check after our application is deployed and then wait for 15 secs after it will  check for evry 10secs 
+  periodSeconds: 10 ----> for every 10sec it will check whether our pod is ready to receive traffic or not.
+

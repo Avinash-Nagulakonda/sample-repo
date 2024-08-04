@@ -1,0 +1,33 @@
+---
+ - hosts: dev
+   user: ansible                                  
+   become: yes
+   connection: ssh
+   
+   tasks:
+    - name: Install required packages in DEV Servers
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - git
+        - docker
+
+    - name: Start and enable Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Clone the repository
+      git:
+        repo: 'https://github.com/Avinash-Nagulakonda/sample-repo.git'
+        dest: /var/www/nodeapp
+
+    - name: Build Docker image
+      command: docker build -t mynode-app /var/www/nodeapp/task1-docker
+
+    - name: Run Docker container
+      command: docker run -d --name mynode-app -p 3000:3000 mynode-app
+
+      

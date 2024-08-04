@@ -1,0 +1,18 @@
+Description:
+- Create a Dockerfile for a simple Node.js application that listens on port 3000. The
+Dockerfile should use a lightweight base image, install dependencies, copy the
+application code, and specify the command to run the application.
+
+I have created a simple Node.js application using a Dockerfile
+
+in our Dockerfile 
+1) we will use a light-weight node image 
+2) we will create a working directory for us to store our files in the container
+3) next, we will copy all the JSON packages to the container
+4) now we will copy the required dependencies to run our node application
+5) As per the requirement, we need to host or listen to our application port 3000. we use EXPOSE
+6) to run our application finally we will use CMD
+
+using light-weight images helps to reduce image size and builds faster, and we can save some space.
+to build an image: docker build -t image_name .
+to use that image with a container: docker run -it --name container_name -p host_port:container_port image_name
